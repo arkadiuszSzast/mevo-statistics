@@ -1,7 +1,6 @@
 package com.mevo.statistics.mevo.bike.domain;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.gson.annotations.SerializedName;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDateTime;
@@ -9,15 +8,15 @@ import java.time.LocalDateTime;
 @Document
 public class Bike {
 
-    @JsonProperty("bike")
+    @SerializedName("bike")
     private Long bikeNumber;
     private Integer battery;
     private Integer range;
     private boolean active;
-    @JsonFormat(pattern = ("yyyy/MM/dd HH:mm:ss"))
     private LocalDateTime date;
 
     public Bike() {
+        this.date = LocalDateTime.now().withSecond(0).withNano(0);
     }
 
     public Bike(Long bikeNumber, Integer battery, Integer range, boolean active) {
@@ -25,6 +24,7 @@ public class Bike {
         this.battery = battery;
         this.range = range;
         this.active = active;
+        this.date = LocalDateTime.now().withSecond(0).withNano(0);
     }
 
     public Long getBikeNumber() {
