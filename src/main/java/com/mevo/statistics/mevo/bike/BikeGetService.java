@@ -20,6 +20,6 @@ public class BikeGetService {
 
     protected Flux<Bike> getBike(BikeFilter bikeFilter) {
         var predicate = bikeFilterCreatorService.create(bikeFilter);
-        return bikeRepository.findAll(predicate);
+        return predicate != null ? bikeRepository.findAll(predicate) : bikeRepository.findAll();
     }
 }

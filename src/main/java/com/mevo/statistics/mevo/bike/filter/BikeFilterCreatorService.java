@@ -13,6 +13,7 @@ public class BikeFilterCreatorService {
         var predicateBuilder = new BooleanBuilder();
         bikeFilter.getBatteryGt().ifPresent(battery -> predicateBuilder.and(bike.battery.gt(battery)));
         bikeFilter.getBatteryLt().ifPresent(battery -> predicateBuilder.and(bike.battery.lt(battery)));
+        bikeFilter.getBikeNumbers().ifPresent(bikeNumbers -> predicateBuilder.and(bike.bikeNumber.in(bikeNumbers)));
         return predicateBuilder.getValue();
     }
 }

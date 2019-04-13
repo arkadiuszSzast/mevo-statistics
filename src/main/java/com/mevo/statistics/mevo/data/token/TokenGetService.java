@@ -18,7 +18,7 @@ public class TokenGetService {
 
     public String getToken() throws IOException {
         var url = new URL("https://rowermevo.pl/");
-        var con = (HttpURLConnection) url.openConnection();
+        var con = url.openConnection();
         var bufferedReader = new BufferedReader(new InputStreamReader(con.getInputStream()));
         var response = bufferedReader
                 .lines()
