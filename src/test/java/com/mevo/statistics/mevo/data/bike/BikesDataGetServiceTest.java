@@ -1,17 +1,16 @@
 package com.mevo.statistics.mevo.data.bike;
 
-import com.mevo.statistics.mevo.bike.domain.Bike;
 import com.mevo.statistics.mevo.data.locations.ExtractDataFromLocationsService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
+import reactor.test.StepVerifier;
 
 import java.io.IOException;
 
 import static com.mevo.statistics.mevo.data.support.StringSupport.createString;
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.when;
 
@@ -37,7 +36,6 @@ class BikesDataGetServiceTest {
         var result = bikesDataGetService.getData();
 
         //assert
-        assertThat(result).hasSize(487);
-        assertThat(result.get(0)).isInstanceOf(Bike.class);
+        StepVerifier.create(result).expectNextCount(487).expectComplete();
     }
 }

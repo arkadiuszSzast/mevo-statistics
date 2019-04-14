@@ -8,17 +8,17 @@ import java.io.IOException;
 @Component
 public class ScheduledStationSave {
 
-    private final GetStationsDataService getStationsDataService;
+    private final StationsDataGetService stationsDataGetService;
     private final StationSaveService stationSaveService;
 
-    public ScheduledStationSave(GetStationsDataService getStationsDataService, StationSaveService stationSaveService) {
-        this.getStationsDataService = getStationsDataService;
+    public ScheduledStationSave(StationsDataGetService stationsDataGetService, StationSaveService stationSaveService) {
+        this.stationsDataGetService = stationsDataGetService;
         this.stationSaveService = stationSaveService;
     }
 
     @Scheduled(cron = "0 0/20 * * * *")
     public void getStationsAndSaveToDb() throws IOException {
-        var stations = getStationsDataService.getData();
+        var stations = stationsDataGetService.getData();
         stationSaveService.save(stations);
     }
 }

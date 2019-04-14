@@ -6,6 +6,7 @@ import com.mevo.statistics.mevo.bike.filter.BikeFilter;
 import com.mevo.statistics.mevo.bike.filter.BikePredicateCreateService;
 import com.mevo.statistics.mevo.bike.filter.BikeQueryPredicateCreateService;
 import com.mevo.statistics.mevo.data.bike.BikesDataGetService;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 
@@ -31,14 +32,12 @@ public class BikeGetService {
 
     protected Flux<Bike> getBikes(BikeFilter bikeFilter) {
         var predicate = bikeQueryPredicateCreateService.create(bikeFilter);
-        return bikeRepository.findAll(predicate);
+        return bikeRepository.findAll(predicate, Sort.by(bikeFilter.getSortType(), bikeFilter.getSortColumn()));
     }
 
     protected Flux<Bike> getBikesNow(BikeFilter bikeFilter) throws IOException {
         var predicate = bikePredicateCreateService.create(bikeFilter);
-        var bikes = bikesDataGetService.getData();
-        return Flux.fromStream(bikes
-                .stream())
+        return bikesDataGetService.getData()
                 .filter(predicate);
     }
 }

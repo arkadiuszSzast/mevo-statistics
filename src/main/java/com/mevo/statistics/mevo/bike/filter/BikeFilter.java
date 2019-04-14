@@ -1,5 +1,6 @@
 package com.mevo.statistics.mevo.bike.filter;
 
+import org.springframework.data.domain.Sort;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDateTime;
@@ -15,6 +16,8 @@ public class BikeFilter {
     private final List<Long> bikeNumbers;
     private final LocalDateTime date;
     private final Boolean active;
+    private final String sortColumn;
+    private final Sort.Direction sortType;
 
     public BikeFilter(Integer batteryGt,
                       Integer batteryLt,
@@ -22,7 +25,9 @@ public class BikeFilter {
                       Integer rangeGt,
                       List<Long> bikeNumbers,
                       @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime date,
-                      Boolean active) {
+                      Boolean active,
+                      String sortColumn,
+                      Sort.Direction sortType) {
         this.batteryGt = batteryGt;
         this.batteryLt = batteryLt;
         this.rangeLt = rangeLt;
@@ -30,6 +35,8 @@ public class BikeFilter {
         this.bikeNumbers = bikeNumbers;
         this.date = date;
         this.active = active;
+        this.sortColumn = sortColumn;
+        this.sortType = sortType;
     }
 
     protected Optional<Integer> getBatteryGt() {
@@ -60,5 +67,13 @@ public class BikeFilter {
 
     public Optional<Integer> getRangeGt() {
         return Optional.ofNullable(rangeGt);
+    }
+
+    public String getSortColumn() {
+        return sortColumn != null ? sortColumn : "uid";
+    }
+
+    public Sort.Direction getSortType() {
+        return sortType != null ? sortType : Sort.Direction.ASC;
     }
 }
