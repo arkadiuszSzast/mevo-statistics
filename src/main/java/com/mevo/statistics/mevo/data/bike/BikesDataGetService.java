@@ -10,13 +10,13 @@ import java.io.IOException;
 import java.util.List;
 
 @Service
-public class GetBikesDataService {
+public class BikesDataGetService {
 
     private static final String GET_BIKES_BATTERIES_PHRASE = "NEXTBIKE_BATTERIES";
 
     private final ExtractDataFromLocationsService extractDataFromLocationsService;
 
-    public GetBikesDataService(ExtractDataFromLocationsService extractDataFromLocationsService) {
+    public BikesDataGetService(ExtractDataFromLocationsService extractDataFromLocationsService) {
         this.extractDataFromLocationsService = extractDataFromLocationsService;
     }
 

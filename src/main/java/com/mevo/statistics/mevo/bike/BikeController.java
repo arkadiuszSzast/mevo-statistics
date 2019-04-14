@@ -6,6 +6,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import reactor.core.publisher.Flux;
 
+import java.io.IOException;
+
 @RestController
 public class BikeController {
 
@@ -17,6 +19,11 @@ public class BikeController {
 
     @GetMapping("/api/bikes")
     public Flux<Bike> getBikes(BikeFilter bikeFilter) {
-        return bikeGetService.getBike(bikeFilter);
+        return bikeGetService.getBikes(bikeFilter);
+    }
+
+    @GetMapping("/api/bikes/now")
+    public Flux<Bike> getBikesNow(BikeFilter bikeFilter) throws IOException {
+        return bikeGetService.getBikesNow(bikeFilter);
     }
 }

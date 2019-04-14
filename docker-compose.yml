@@ -16,7 +16,7 @@ services:
           - "mevo_db"
 
   mevo-statistics:
-    image: openjdk:11-jdk
+    image: szastarek/mevo
     container_name: mevo-statistics
     ports:
       - "8080:8080"
