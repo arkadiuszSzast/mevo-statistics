@@ -1,0 +1,37 @@
+version: '3.3'
+
+services:
+
+  mevo_db:
+    image: mongo
+    container_name: mevo_db
+    ports:
+      - 27017:27017
+    command: mongod --port 27017
+    environment:
+      - MONGO_INITDB_DATABASE=mevo
+    networks:
+      samplenet:
+        aliases:
+          - "mevo_db"
+
+  mevo-statistics:
+    image: openjdk:11-jdk
+    container_name: mevo-statistics
+    ports:
+      - "8080:8080"
+    volumes:
+      - "./build/libs:/mevo:rw"
+    entrypoint: ["java", "-jar", "/mevo/mevo-0.0.1-SNAPSHOT.jar"]
+    restart: on-failure
+    networks:
+      samplenet:
+        aliases:
+          - "mevo-statistics"
+
+networks:
+  samplenet:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 10.5.0.0/16
