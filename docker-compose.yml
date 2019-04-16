@@ -16,12 +16,14 @@ services:
           - "mevo_db"
 
   mevo-statistics:
-    image: openjdk:11-jdk
+    image: szastarek/mevo
     container_name: mevo-statistics
     ports:
       - "8080:8080"
     volumes:
       - "./build/libs:/mevo:rw"
+    environment:
+      - spring.data.mongodb.uri=mongodb://mevo_db:27017/mevo
     entrypoint: ["java", "-jar", "/mevo/mevo-0.0.1-SNAPSHOT.jar"]
     restart: on-failure
     networks:

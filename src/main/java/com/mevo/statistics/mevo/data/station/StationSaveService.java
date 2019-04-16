@@ -3,8 +3,7 @@ package com.mevo.statistics.mevo.data.station;
 import com.mevo.statistics.mevo.station.domain.Station;
 import com.mevo.statistics.mevo.station.domain.StationRepository;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
+import reactor.core.publisher.Flux;
 
 @Service
 public class StationSaveService {
@@ -15,7 +14,7 @@ public class StationSaveService {
         this.stationRepository = stationRepository;
     }
 
-    public void save(List<Station> stations) {
+    public void save(Flux<Station> stations) {
         stationRepository.saveAll(stations).subscribe();
     }
 }

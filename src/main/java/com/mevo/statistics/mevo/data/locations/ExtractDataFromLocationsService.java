@@ -8,7 +8,6 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.stream.Collectors;
 
 @Service
 public class ExtractDataFromLocationsService {
@@ -20,7 +19,7 @@ public class ExtractDataFromLocationsService {
     }
 
     public String extractDataFromLocations(String searchingText) throws IOException {
-        HttpURLConnection httpURLConnection = sendRequest();
+        var httpURLConnection = sendRequest();
         return extractData(httpURLConnection, searchingText);
     }
 
@@ -32,12 +31,8 @@ public class ExtractDataFromLocationsService {
 
     private String extractData(HttpURLConnection con, String searchingText) throws IOException {
         var bufferedReader = new BufferedReader(new InputStreamReader(con.getInputStream()));
-        var response = bufferedReader
+        return bufferedReader
                 .lines()
-                .collect(Collectors.toList());
-
-        return response
-                .stream()
                 .filter(line -> line.contains(searchingText))
                 .findFirst()
                 .orElseThrow();

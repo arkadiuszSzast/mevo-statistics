@@ -5,25 +5,26 @@ import com.google.gson.reflect.TypeToken;
 import com.mevo.statistics.mevo.data.locations.ExtractDataFromLocationsService;
 import com.mevo.statistics.mevo.station.domain.Station;
 import org.springframework.stereotype.Service;
+import reactor.core.publisher.Flux;
 
 import java.io.IOException;
 import java.util.List;
 
 @Service
-public class GetStationsDataService {
+public class StationsDataGetService {
 
     private static final String GET_STATIONS_PHRASE = "NEXTBIKE_PLACES_DB";
 
     private final ExtractDataFromLocationsService extractDataFromLocationsService;
 
-    public GetStationsDataService(ExtractDataFromLocationsService extractDataFromLocationsService) {
+    public StationsDataGetService(ExtractDataFromLocationsService extractDataFromLocationsService) {
         this.extractDataFromLocationsService = extractDataFromLocationsService;
     }
 
-    public List<Station> getData() throws IOException {
+    public Flux<Station> getData() throws IOException {
         var stations = extractDataFromLocationsService.extractDataFromLocations(GET_STATIONS_PHRASE);
         var stationsAsJsonArray = getJsonWithStations(stations);
-        return mapToDomain(stationsAsJsonArray);
+        return Flux.fromStream(mapToDomain(stationsAsJsonArray).stream());
     }
 
     private String getJsonWithStations(String stations) {
